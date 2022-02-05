@@ -1,0 +1,34 @@
+ //Secuencia de habilitacion (WRITE ENABLE)
+            LATCbits.LATC3 = 0;
+            delay_ms(5);
+
+            spi_write(0x06);
+
+            delay_ms(5);
+            LATCbits.LATC3 = 1;
+            
+            sprintf(txbuffer, "Habilitacion de escritura completada \r\n");
+            EnviarString(txbuffer);
+            
+            delay_ms(1000);
+
+            //Operacion de escritura
+            LATCbits.LATC3 = 0;
+            delay_ms(5);
+
+            spi_write(0x02);  // Instruccion de tipo escritura
+
+            // Direccion de memoria
+            spi_write(0x00);  //MSB
+            spi_write(0x01);  //LSB
+
+            //Escribimos el valor 5 en la direccion 0x01
+            spi_write(0x05);
+
+            delay_ms(5);
+            LATCbits.LATC3 = 1;
+
+            sprintf(txbuffer, "Escritura completada (valor 5 en direccion 0x01) \r\n");
+            EnviarString(txbuffer);
+            
+            delay_ms(5000);
